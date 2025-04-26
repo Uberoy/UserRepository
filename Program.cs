@@ -32,6 +32,8 @@ builder.Services
 
 var app = builder.Build();
 
+app.Urls.Add("http://0.0.0.0:5005");
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
