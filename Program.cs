@@ -30,9 +30,9 @@ builder.Services
         )
     );
 
-var app = builder.Build();
+builder.WebHost.UseUrls("http://0.0.0.0:5005");
 
-app.Urls.Add("http://0.0.0.0:5005");
+var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
