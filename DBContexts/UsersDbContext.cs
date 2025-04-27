@@ -1,15 +1,15 @@
-﻿using CardRepository.Entities;
+﻿using UserRepository.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 
-namespace CardRepository.DBContexts
+namespace UserRepository.DBContexts
 {
-    public class CardsDbContext : DbContext
+    public class UsersDbContext : DbContext
     {
-        public CardsDbContext(DbContextOptions<CardsDbContext> options) : base(options) { }
+        public UsersDbContext(DbContextOptions<UsersDbContext> options) : base(options) { }
 
-        public DbSet<Card> Cards { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

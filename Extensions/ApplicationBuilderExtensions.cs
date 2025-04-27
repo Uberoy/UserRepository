@@ -1,4 +1,4 @@
-﻿namespace CardRepository.Extensions;
+﻿namespace UserRepository.Extensions;
 
 public static class ApplicationBuilderExtensions
 {

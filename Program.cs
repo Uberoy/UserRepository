@@ -1,5 +1,5 @@
-using CardRepository.Endpoints;
-using CardRepository.Extensions;
+using UserRepository.Endpoints;
+using UserRepository.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

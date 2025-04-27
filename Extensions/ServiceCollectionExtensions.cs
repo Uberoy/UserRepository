@@ -1,8 +1,8 @@
-﻿using CardRepository.DBContexts;
-using CardRepository.Repositories;
+﻿using UserRepository.DBContexts;
+using UserRepository.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace CardRepository.Extensions;
+namespace UserRepository.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -14,10 +14,10 @@ public static class ServiceCollectionExtensions
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
-        services.AddDbContext<CardsDbContext>(options =>
+        services.AddDbContext<UsersDbContext>(options =>
             options.UseNpgsql(connString));
 
-        services.AddScoped<ICardRepository, CardsRepository>();
+        services.AddScoped<IUserRepository, UsersRepository>();
 
         services.AddCors(options =>
         {

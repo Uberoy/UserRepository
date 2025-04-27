@@ -1,20 +1,20 @@
-﻿using CardRepository.Entities;
-using CardRepository.Repositories;
+﻿using UserRepository.Entities;
+using UserRepository.Repositories;
 
-namespace CardRepository.Endpoints
+namespace UserRepository.Endpoints
 {
     public static class EndpointMapping
     {
         public static WebApplication MapEndpoints(this WebApplication app)
         {
-            app.MapGet("/cards", async (ICardRepository repo) =>
+            app.MapGet("/users", async (IUserRepository repo) =>
             {
                 return await repo.GetAllAsync();
             });
 
-            app.MapPost("/cards", async (ICardRepository repo, Card card) =>
+            app.MapPost("/users", async (IUserRepository repo, User user) =>
             {
-                await repo.AddAsync(card);
+                await repo.AddAsync(user);
             });
 
             return app;
