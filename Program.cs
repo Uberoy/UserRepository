@@ -1,3 +1,4 @@
+using UserRepository.DBContexts;
 using UserRepository.Endpoints;
 using UserRepository.Extensions;
 
@@ -13,6 +14,8 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 builder.Services.AddCustomServices(builder.Configuration);
 
 var app = builder.Build();
+
+app.ApplyMigrations<UsersDbContext>();
 
 // Configure middleware
 app.UseCustomMiddleware();
