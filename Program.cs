@@ -1,53 +1,21 @@
-using CardRepository.DBContexts;
-using CardRepository.Entities;
-using CardRepository.Repositories;
-using Microsoft.EntityFrameworkCore;
+using CardRepository.Endpoints;
+using CardRepository.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var connString = builder.Configuration.GetConnectionString("DefaultConnection");
-
+// Host (server) settings
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
     serverOptions.Configure(builder.Configuration.GetSection("Kestrel"));
 });
 
-builder.Services.AddDbContext<CardsDbContext>(options =>
-    options.UseNpgsql(connString));
-
-builder.Services.AddScoped<ICardRepository, CardsRepository>();
-
-builder.Services
-    .AddCors(options =>
-        options.AddPolicy(
-            "Default",
-            policy =>
-                policy
-                    .WithOrigins("http://localhost:5000")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials()
-        )
-    );
+// Register services
+builder.Services.AddCustomServices(builder.Configuration);
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
-
-app.UseHttpsRedirection();
-app.UseCors("Default");
-
-app.MapGet("/cards", async (ICardRepository repo) =>
-{
-    return await repo.GetAllAsync();
-});
-app.MapPost("/cards", async (ICardRepository repo, Card card) =>
-{
-    await repo.AddAsync(card);
-});
+// Configure middleware
+app.UseCustomMiddleware();
+app.MapEndpoints();
 
 app.Run();
