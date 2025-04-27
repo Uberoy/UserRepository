@@ -8,13 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Connection string
 var connString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.Configure(builder.Configuration.GetSection("Kestrel"));
+});
 
 builder.Services.AddDbContext<CardsDbContext>(options =>
     options.UseNpgsql(connString));
 
-// Add Repository
 builder.Services.AddScoped<ICardRepository, CardsRepository>();
 
 builder.Services
@@ -29,8 +32,6 @@ builder.Services
                     .AllowCredentials()
         )
     );
-
-builder.WebHost.UseUrls("http://0.0.0.0:5005");
 
 var app = builder.Build();
 
